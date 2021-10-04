@@ -1,8 +1,8 @@
 let express = require("express")
 const crypto = require("crypto")
 const key = "12345678926457893563672635876353"
+const iv = "1234567891123456";
 const note = 20
-const iv = crypto.randomBytes(16);
 
 let app = express()
 
@@ -31,7 +31,7 @@ app.post("/", (req, res) => {
     console.log("Prenom : " + prenom);
 
     //Chaine a crypté
-    data = num+" - "+nom+" - "+prenom+ " - "+note
+    data = num+","+nom+","+prenom+ ","+note
     console.log(data)
     console.log(req.body.lua)
 
@@ -59,7 +59,8 @@ app.post("/", (req, res) => {
     else console.log("Clé [-]")
     // res.render(__dirname + "/views/pages/index", {name:data})
     const fs = require('fs');
-    fs.appendFile('public/files/clé.txt', encrypted, function (err) {
+    fs.unlinkSync('public/files/clé.txt') // Reset du fichier dans le cas ou une clé est déjà présente 
+    fs.appendFile('public/files/clé.txt', encrypted, function (err) { // On ajoute la clé au fichier txt
         if (err) throw err;
             console.log('Fichier créé !');
         });

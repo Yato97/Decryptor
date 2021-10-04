@@ -18,6 +18,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.JFileChooser;
 
 public class WindowsM extends JFrame {
@@ -30,7 +35,7 @@ public class WindowsM extends JFrame {
     Border EtchedBorderRaised = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
     JLabel zoneInput = new JLabel();
-    JTextArea zoneOutput = new JTextArea();
+    static JTextArea zoneOutput = new JTextArea();
 
     JLabel t1 = new JLabel("Sélection du fichier contenant les chaines cryptées : ");
     JLabel t2 = new JLabel("Liste décryptée : ");
@@ -38,6 +43,13 @@ public class WindowsM extends JFrame {
     Dimension dim = new Dimension(800, 550);
 
     JFileChooser dialogue = new JFileChooser();
+
+    String pathsrc;
+    String pathdst;
+    File directory;
+    // Variables de test d'existences
+    File dir = new File(System.getProperty("user.dir") + File.separator + "dst");
+    File csv = new File(System.getProperty("user.dir") + File.separator + "file.csv");
 
     public WindowsM() {
         super("Décryptor - multi export");
@@ -104,9 +116,40 @@ public class WindowsM extends JFrame {
         selection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (csv.exists()) {
+                    csv.delete();
+                }
+                if (dir.exists()) {
+                    try {
+                        RemoveDir.delete(dir);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                }
                 dialogue.showOpenDialog(null);
-                zoneInput.setText("Fichier choisi : " + dialogue.getSelectedFile());
+                pathsrc = dialogue.getSelectedFile().getAbsolutePath();
+                pathdst = System.getProperty("user.dir") + File.separator + "dst";
+                zoneInput.setText("Fichier choisi : " + pathsrc);
+                try {
+                    UnzipFile.unZip(pathsrc, pathdst);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 decrypte.setVisible(true);
+            }
+        });
+
+        decrypte.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                directory = new File(pathdst);
+                try {
+                    Parse.parse(directory); // On récupérent les clé crypté et on les decrypte + affichage sur UI
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         });
         return temp;
@@ -138,6 +181,12 @@ public class WindowsM extends JFrame {
         south.add(Box.createVerticalGlue());
         south.add(Box.createHorizontalGlue());
 
+        exporter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CreateCSV.createCSV(System.getProperty("user.dir")); // On genere le fichier cvs
+            }
+        });
         temp.setBorder(BorderFactory.createTitledBorder(EtchedBorderRaised, "Résultat", TitledBorder.LEADING,
                 TitledBorder.TOP, new Font("Arial", Font.PLAIN, 12), Color.gray));
 
