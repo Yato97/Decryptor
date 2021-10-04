@@ -1,3 +1,4 @@
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -12,6 +13,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -50,7 +52,9 @@ public class Windows extends JFrame {
         decrypter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                zoneOutput.setText("38000026 - Roulland Donovan - 20/20");
+                String crypted = zoneInput.getText();
+                String decode = Decrypt.decrypt(crypted);
+                zoneOutput.setText(decode);
             }
         });
 
