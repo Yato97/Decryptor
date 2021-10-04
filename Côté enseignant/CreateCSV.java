@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 public class CreateCSV {
     public static void createCSV(String path) {
         try {
-            PrintWriter printWriter = new PrintWriter(new File(path + File.separator + "file.csv"));
+            PrintWriter printWriter = new PrintWriter(new File(path + ".csv"));
             StringBuilder stringBuilder = new StringBuilder();
 
             String total = WindowsM.zoneOutput.getText();
@@ -17,6 +17,10 @@ public class CreateCSV {
             stringBuilder.append("Prenom");
             stringBuilder.append(";");
             stringBuilder.append("Note");
+            stringBuilder.append(";");
+            stringBuilder.append("Date");
+            stringBuilder.append(";");
+            stringBuilder.append("Heure");
             stringBuilder.append("\r\n");
             for (String s : split) {
                 System.out.println(s);

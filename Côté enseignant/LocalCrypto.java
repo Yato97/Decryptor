@@ -2,6 +2,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,25 +21,34 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Windows extends JFrame {
+public class LocalCrypto extends JFrame {
     JPanel contenue;
 
-    JButton decrypter = new JButton("Décrypter");
+    JButton encrypter = new JButton("Crypter");
     JButton exporter = new JButton("Exporter");
 
-    JTextArea zoneInput = new JTextArea();;
-    JTextArea zoneOutput = new JTextArea();;
+    JTextArea zoneInputNum = new JTextArea();
+    JTextArea zoneInputNom = new JTextArea();;
+    JTextArea zoneInputPrenom = new JTextArea();;
+    static JTextArea zoneOutput = new JTextArea();
 
-    JLabel t1 = new JLabel("Entrez la chaine cryptée : ");
+    JLabel t1 = new JLabel("Numéro étudiant : ");
+    JLabel t4 = new JLabel("Nom : ");
+    JLabel t3 = new JLabel("Prénom : ");
     JLabel t2 = new JLabel("Résultat : ");
 
-    Dimension dim = new Dimension(600, 300);
+    Dimension dim = new Dimension(600, 400);
 
     Border EtchedBorderRaised = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
-    public Windows() {
-        super("Décryptor - mono export");
+    static int NOTE = 20;
+
+    public LocalCrypto() {
+        super("Encryptor");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(dim);
         this.setMinimumSize(dim);
@@ -51,13 +61,22 @@ public class Windows extends JFrame {
         this.setResizable(false);
 
         zoneOutput.setEditable(false); // On empéche l'edition du résultat
+        exporter.setVisible(false);
 
-        decrypter.addActionListener(new ActionListener() {
+        encrypter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String crypted = zoneInput.getText();
-                String decode = Decrypt.decrypt(crypted);
-                zoneOutput.setText(decode);
+                String date = null;
+                String heure = null;
+                Date aujourdhui = new Date();
+
+                date = new SimpleDateFormat("dd/MM/yy").format(aujourdhui);
+                heure = new SimpleDateFormat("hh:mm:ss").format(aujourdhui);
+                String crypted = zoneInputNum.getText() + "," + zoneInputNom.getText() + "," + zoneInputPrenom.getText()
+                        + "," + NOTE + "," + date + "," + heure;
+                String encode = Decrypt.encrypt(crypted);
+                zoneOutput.setText(encode);
+                exporter.setVisible(true);
             }
         });
 
@@ -73,16 +92,23 @@ public class Windows extends JFrame {
         JPanel north = new JPanel();
         JPanel temp = new JPanel();
 
-        north.setPreferredSize(new Dimension(600, 120));
+        north.setPreferredSize(new Dimension(600, 220));
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
 
         t1.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        decrypter.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        encrypter.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
 
         temp.add(t1);
-        temp.add(zoneInput);
-        zoneInput.setPreferredSize(new Dimension(550, 25));
-        temp.add(decrypter);
+        temp.add(zoneInputNum);
+        zoneInputNum.setPreferredSize(new Dimension(550, 25));
+        temp.add(t4);
+        temp.add(zoneInputNom);
+        zoneInputNom.setPreferredSize(new Dimension(550, 25));
+        temp.add(t3);
+        temp.add(zoneInputPrenom);
+        zoneInputPrenom.setPreferredSize(new Dimension(550, 25));
+
+        temp.add(encrypter);
 
         temp.setBorder(BorderFactory.createTitledBorder(EtchedBorderRaised, "Clé", TitledBorder.LEADING,
                 TitledBorder.TOP, new Font("Arial", Font.PLAIN, 12), Color.gray));
@@ -96,7 +122,7 @@ public class Windows extends JFrame {
         JPanel south = new JPanel();
         JPanel temp = new JPanel();
 
-        south.setPreferredSize(new Dimension(600, 100));
+        south.setPreferredSize(new Dimension(600, 120));
         south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 
         t2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -104,8 +130,17 @@ public class Windows extends JFrame {
 
         temp.add(t2);
         temp.add(zoneOutput);
-        zoneOutput.setPreferredSize(new Dimension(550, 25));
-        // temp.add(exporter);
+        zoneOutput.setPreferredSize(new Dimension(550, 20));
+        temp.add(exporter);
+        exporter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser dialogue = new JFileChooser();
+                dialogue.showSaveDialog(null);
+                String pathsrc = dialogue.getSelectedFile().getAbsolutePath();
+                CreateTxt.createTXT(pathsrc);
+            }
+        });
 
         temp.setBorder(BorderFactory.createTitledBorder(EtchedBorderRaised, "Déverrouillage", TitledBorder.LEADING,
                 TitledBorder.TOP, new Font("Arial", Font.PLAIN, 12), Color.gray));
@@ -116,8 +151,7 @@ public class Windows extends JFrame {
 
     public static void main(String[] args) throws UnsupportedLookAndFeelException {
         UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        Windows windows = new Windows();
+        LocalCrypto windows = new LocalCrypto();
         windows.setVisible(true);
-
     }
 }

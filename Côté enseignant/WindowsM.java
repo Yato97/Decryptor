@@ -38,7 +38,7 @@ public class WindowsM extends JFrame {
     JLabel t1 = new JLabel("Sélection du fichier contenant les chaines cryptées : ");
     JLabel t2 = new JLabel("Liste décryptée : ");
 
-    Dimension dim = new Dimension(900, 700);
+    Dimension dim = new Dimension(900, 500);
 
     JFileChooser dialogue = new JFileChooser();
 
@@ -62,6 +62,7 @@ public class WindowsM extends JFrame {
         this.setIconImage(icon.getImage());
         this.setResizable(false);
 
+        exporter.setVisible(false);
         zoneOutput.setEditable(false); // On empéche l'edition du résultat
         contenue = (JPanel) this.getContentPane();
 
@@ -142,6 +143,7 @@ public class WindowsM extends JFrame {
                 directory = new File(pathdst);
                 try {
                     Parse.parse(directory); // On récupérent les clé crypté et on les decrypte + affichage sur UI
+                    exporter.setVisible(true);
                 } catch (FileNotFoundException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -157,7 +159,7 @@ public class WindowsM extends JFrame {
         JPanel south = new JPanel();
         JPanel temp = new JPanel();
 
-        south.setPreferredSize(new Dimension(500, 700));
+        south.setPreferredSize(new Dimension(500, 650));
         south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 
         t2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -169,7 +171,7 @@ public class WindowsM extends JFrame {
         temp.add(zoneOutput);
         zoneOutput.setPreferredSize(new Dimension(400, 450));
         temp.add(exporter);
-        temp.add(enregistrer);
+        // temp.add(enregistrer);
         temp.add(Box.createVerticalGlue());
         temp.add(Box.createHorizontalGlue());
 
@@ -182,7 +184,10 @@ public class WindowsM extends JFrame {
         exporter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreateCSV.createCSV(System.getProperty("user.dir")); // On genere le fichier cvs
+                JFileChooser dialogue = new JFileChooser();
+                dialogue.showSaveDialog(null);
+                String pathsrc = dialogue.getSelectedFile().getAbsolutePath();
+                CreateCSV.createCSV(pathsrc); // On genere le fichier cvs
             }
         });
         temp.setBorder(BorderFactory.createTitledBorder(EtchedBorderRaised, "Résultat", TitledBorder.LEADING,
