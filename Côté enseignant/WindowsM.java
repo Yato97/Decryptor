@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
 import javax.swing.border.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.BorderLayout;
@@ -40,7 +39,7 @@ public class WindowsM extends JFrame {
     JLabel t1 = new JLabel("Sélection du fichier contenant les chaines cryptées : ");
     JLabel t2 = new JLabel("Liste décryptée : ");
 
-    Dimension dim = new Dimension(800, 550);
+    Dimension dim = new Dimension(900, 700);
 
     JFileChooser dialogue = new JFileChooser();
 
@@ -57,12 +56,12 @@ public class WindowsM extends JFrame {
         this.setSize(dim);
         this.setMinimumSize(dim);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
-        // ImageIcon imageIcon = new ImageIcon("img/test.jpg");
-        // setContentPane(new JLabel(imageIcon));
-
-        ImageIcon icon = new ImageIcon("img/fav.png");
-        setIconImage(icon.getImage());
+        ImageIcon icon = new ImageIcon(
+                System.getProperty("user.dir") + File.separator + "/Côté enseignant/img/fav.png");
+        this.setIconImage(icon.getImage());
+        this.setResizable(false);
 
         zoneOutput.setEditable(false); // On empéche l'edition du résultat
         contenue = (JPanel) this.getContentPane();
@@ -82,10 +81,8 @@ public class WindowsM extends JFrame {
 
         temp.setLayout(new BoxLayout(temp, BoxLayout.Y_AXIS));
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
-
         north.setBorder(BorderFactory.createTitledBorder(EtchedBorderRaised, "Paramètre", TitledBorder.LEADING,
                 TitledBorder.TOP, new Font("Arial", Font.PLAIN, 12), Color.gray));
-
         selection.setAlignmentX(CENTER_ALIGNMENT);
         t1.setAlignmentX(CENTER_ALIGNMENT);
         zoneInput.setAlignmentX(CENTER_ALIGNMENT);
@@ -152,6 +149,8 @@ public class WindowsM extends JFrame {
                 }
             }
         });
+
+        temp.setBorder(new EmptyBorder(30, 10, 10, 10));
         return temp;
     }
 
@@ -159,7 +158,7 @@ public class WindowsM extends JFrame {
         JPanel south = new JPanel();
         JPanel temp = new JPanel();
 
-        south.setPreferredSize(new Dimension(350, 550));
+        south.setPreferredSize(new Dimension(500, 700));
         south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 
         t2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -169,7 +168,7 @@ public class WindowsM extends JFrame {
         temp.add(Box.createVerticalGlue());
         temp.add(t2);
         temp.add(zoneOutput);
-        zoneOutput.setPreferredSize(new Dimension(300, 300));
+        zoneOutput.setPreferredSize(new Dimension(400, 450));
         temp.add(exporter);
         temp.add(enregistrer);
         temp.add(Box.createVerticalGlue());
@@ -189,7 +188,7 @@ public class WindowsM extends JFrame {
         });
         temp.setBorder(BorderFactory.createTitledBorder(EtchedBorderRaised, "Résultat", TitledBorder.LEADING,
                 TitledBorder.TOP, new Font("Arial", Font.PLAIN, 12), Color.gray));
-
+        south.setBorder(new EmptyBorder(10, 0, 0, 20));
         return south;
     }
 

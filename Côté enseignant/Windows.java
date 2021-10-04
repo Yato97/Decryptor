@@ -19,6 +19,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Windows extends JFrame {
     JPanel contenue;
@@ -42,8 +43,11 @@ public class Windows extends JFrame {
         this.setSize(dim);
         this.setMinimumSize(dim);
         this.setLocationRelativeTo(null);
-        ImageIcon icon = new ImageIcon("img/fav.png");
+
+        ImageIcon icon = new ImageIcon(
+                System.getProperty("user.dir") + File.separator + "/Côté enseignant/img/fav.png");
         this.setIconImage(icon.getImage());
+
         this.setResizable(false);
 
         zoneOutput.setEditable(false); // On empéche l'edition du résultat
