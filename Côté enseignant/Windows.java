@@ -43,7 +43,12 @@ public class Windows extends JFrame {
         this.setSize(dim);
         this.setMinimumSize(dim);
         this.setLocationRelativeTo(null);
-
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         ImageIcon icon = new ImageIcon(
                 System.getProperty("user.dir") + File.separator + "/Côté enseignant/img/fav.png");
         this.setIconImage(icon.getImage());
@@ -114,10 +119,4 @@ public class Windows extends JFrame {
         return south;
     }
 
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        Windows windows = new Windows();
-        windows.setVisible(true);
-
-    }
 }

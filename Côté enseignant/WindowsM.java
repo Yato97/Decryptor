@@ -46,8 +46,7 @@ public class WindowsM extends JFrame {
     String pathdst;
     File directory;
     // Variables de test d'existences
-    File dir = new File(System.getProperty("user.dir") + File.separator + "dst");
-    File csv = new File(System.getProperty("user.dir") + File.separator + "file.csv");
+    File dir;
 
     public WindowsM() {
         super("Décryptor - multi export");
@@ -56,7 +55,12 @@ public class WindowsM extends JFrame {
         this.setMinimumSize(dim);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         ImageIcon icon = new ImageIcon(
                 System.getProperty("user.dir") + File.separator + "/Côté enseignant/img/fav.png");
         this.setIconImage(icon.getImage());
@@ -113,9 +117,13 @@ public class WindowsM extends JFrame {
         selection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (csv.exists()) {
-                    csv.delete();
-                }
+                dialogue.showOpenDialog(null);
+                pathsrc = dialogue.getSelectedFile().getAbsolutePath();
+                pathdst = dialogue.getSelectedFile().getParentFile().getAbsolutePath() + File.separator + "dst";
+                zoneInput.setText("Fichier choisi : " + pathsrc);
+                System.out.println("Destination : " + pathdst);
+                System.out.println("Source : " + pathsrc);
+                dir = new File(pathdst);
                 if (dir.exists()) {
                     try {
                         RemoveDir.delete(dir);
@@ -124,10 +132,6 @@ public class WindowsM extends JFrame {
                         e1.printStackTrace();
                     }
                 }
-                dialogue.showOpenDialog(null);
-                pathsrc = dialogue.getSelectedFile().getAbsolutePath();
-                pathdst = System.getProperty("user.dir") + File.separator + "dst";
-                zoneInput.setText("Fichier choisi : " + pathsrc);
                 try {
                     UnzipFile.unZip(pathsrc, pathdst);
                 } catch (IOException e1) {
@@ -194,11 +198,5 @@ public class WindowsM extends JFrame {
                 TitledBorder.TOP, new Font("Arial", Font.PLAIN, 12), Color.gray));
         south.setBorder(new EmptyBorder(10, 0, 0, 20));
         return south;
-    }
-
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        WindowsM windowsM = new WindowsM();
-        windowsM.setVisible(true);
     }
 }

@@ -50,7 +50,8 @@ public class WindowsP extends JFrame {
         mono.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Windows windows = new Windows();
+                Windows windows;
+                windows = new Windows();
                 windows.setVisible(true);
             }
         });
@@ -58,8 +59,9 @@ public class WindowsP extends JFrame {
         multi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WindowsM windowsM = new WindowsM();
-                windowsM.setVisible(true);
+                WindowsM windows;
+                windows = new WindowsM();
+                windows.setVisible(true);
             }
         });
 
@@ -81,8 +83,13 @@ public class WindowsP extends JFrame {
         return temp;
     }
 
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel(new NimbusLookAndFeel());
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         WindowsP fenetre = new WindowsP();
         fenetre.setVisible(true);
     }

@@ -7,8 +7,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Hex;
-
 public class Decrypt {
     private static final String ENCRYPTION_KEY = "12345678926457893563672635876353"; // Secret Key
     private static final String ENCRYPTION_IV = "1234567891123456"; // Salt
@@ -76,16 +74,5 @@ public class Decrypt {
             sb.append(DIGITS[data[i] & 0x0F]);
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        // String src = "38000026;Roulland;Donovan;20";
-        // String test =
-        // "DCF8BC5EDE1DD06EDD33C5A0A67C131F82A2BE7009689E502CA9CC58CEAF47C3";
-        // System.out.println("src: " + src);
-        // System.out.println("decrypted: " + decrypt(test));
-        // //
-        // decrypt("B648250095B279D3648752C63E5C91211C45A6D8DBBC529F0439685E03847E18");
-
     }
 }
