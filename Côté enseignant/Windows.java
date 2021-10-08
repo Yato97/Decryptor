@@ -19,7 +19,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class Windows extends JFrame {
     JPanel contenue;
@@ -49,8 +48,7 @@ public class Windows extends JFrame {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        ImageIcon icon = new ImageIcon(
-                System.getProperty("user.dir") + File.separator + "/Côté enseignant/img/fav.png");
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
         this.setIconImage(icon.getImage());
 
         this.setResizable(false);
