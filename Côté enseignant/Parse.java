@@ -12,6 +12,7 @@ public class Parse {
                     WindowsM.zoneOutput.append(Decrypt.decrypt(sc.nextLine()));
                     WindowsM.zoneOutput.append("\n");
                 }
+                sc.close();
             } else {
                 parse(file);
             }
