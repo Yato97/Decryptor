@@ -31,16 +31,18 @@ public class LocalCrypto extends JFrame {
     JButton exporter = new JButton("Exporter");
 
     JTextArea zoneInputNum = new JTextArea();
-    JTextArea zoneInputNom = new JTextArea();;
-    JTextArea zoneInputPrenom = new JTextArea();;
+    JTextArea zoneInputNom = new JTextArea();
+    JTextArea zoneInputPrenom = new JTextArea();
+    JTextArea zoneInputDate = new JTextArea();;
     static JTextArea zoneOutput = new JTextArea();
 
     JLabel t1 = new JLabel("Numéro étudiant : ");
     JLabel t4 = new JLabel("Nom : ");
     JLabel t3 = new JLabel("Prénom : ");
+    JLabel t5 = new JLabel("Date de naissance (JJ/MM/AAAA) : ");
     JLabel t2 = new JLabel("Résultat : ");
 
-    Dimension dim = new Dimension(600, 400);
+    Dimension dim = new Dimension(600, 440);
 
     Border EtchedBorderRaised = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
@@ -69,9 +71,9 @@ public class LocalCrypto extends JFrame {
                 String heure = null;
                 Date aujourdhui = new Date();
 
-                date = new SimpleDateFormat("dd/MM/yy").format(aujourdhui);
+                date = new SimpleDateFormat("dd/MM/yyyy").format(aujourdhui);
                 heure = new SimpleDateFormat("hh:mm:ss").format(aujourdhui);
-                String crypted = zoneInputNum.getText() + "," + zoneInputNom.getText() + "," + zoneInputPrenom.getText()
+                String crypted = zoneInputNum.getText() + "," + zoneInputNom.getText() + "," + zoneInputPrenom.getText() + "," + zoneInputDate.getText()
                         + "," + NOTE + "," + date + "," + heure;
                 String encode = Decrypt.encrypt(crypted);
                 zoneOutput.setText(encode);
@@ -91,7 +93,7 @@ public class LocalCrypto extends JFrame {
         JPanel north = new JPanel();
         JPanel temp = new JPanel();
 
-        north.setPreferredSize(new Dimension(600, 220));
+        north.setPreferredSize(new Dimension(600, 260));
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
 
         t1.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -106,6 +108,9 @@ public class LocalCrypto extends JFrame {
         temp.add(t3);
         temp.add(zoneInputPrenom);
         zoneInputPrenom.setPreferredSize(new Dimension(550, 25));
+        temp.add(t5);
+        temp.add(zoneInputDate);
+        zoneInputDate.setPreferredSize(new Dimension(550, 25));
 
         temp.add(encrypter);
 

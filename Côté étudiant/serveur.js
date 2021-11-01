@@ -33,7 +33,7 @@ app.post("/", (req, res) => {
     let minutes = date_ob.getMinutes();
     // current seconds
     let seconds = date_ob.getSeconds();
-    let currentDate = year + "-" + month + "-" + date;
+    let currentDate = date + "/" + month + "/" + year;
     let currentHour = hours + ":" + minutes + ":" + seconds;
     
     //Récupération des valeur entré par l'etudiant dans le formulaire
@@ -41,13 +41,14 @@ app.post("/", (req, res) => {
     var num = req.body.num; 
     var nom = req.body.nom;
     var prenom = req.body.prenom;
+    var dateN = req.body.date
     console.log("Num : " + num);
     console.log("Nom : " + nom);
     console.log("Prenom : " + prenom);
     console.log(currentDate);
 
     //Chaine a crypté
-    data = num+","+nom+","+prenom+ ","+note + ","+ currentDate + ","+ currentHour;
+    data = num+","+nom+","+prenom+ ","+dateN+","+note + ","+ currentDate + ","+ currentHour;
     console.log(data)
     console.log(req.body.lua)
 

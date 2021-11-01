@@ -48,8 +48,12 @@ public class Windows extends JFrame {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
-        this.setIconImage(icon.getImage());
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
+            this.setIconImage(icon.getImage());
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
 
         this.setResizable(false);
 

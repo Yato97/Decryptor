@@ -27,7 +27,7 @@ function maFct2() {
 
 function maFct3() {
     result.style.opacity="1"
-    result.style.left="30rem"
+    result.style.marginTop="1rem"
     result.style.transition = "all";
     result.style.transitionDuration = "1s";
 }

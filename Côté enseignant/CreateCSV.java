@@ -16,6 +16,8 @@ public class CreateCSV {
             stringBuilder.append(";");
             stringBuilder.append("Prenom");
             stringBuilder.append(";");
+            stringBuilder.append("Date naissance");
+            stringBuilder.append(";");
             stringBuilder.append("Note");
             stringBuilder.append(";");
             stringBuilder.append("Date");

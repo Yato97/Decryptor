@@ -33,8 +33,12 @@ public class WindowsP extends JFrame {
         this.setMinimumSize(dim);
         this.setMaximumSize(dim);
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
-        this.setIconImage(icon.getImage());
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
+            this.setIconImage(icon.getImage());
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
 
         this.setLocationRelativeTo(null);
 
