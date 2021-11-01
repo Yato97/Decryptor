@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -61,8 +62,18 @@ public class WindowsM extends JFrame {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
-        this.setIconImage(icon.getImage());
+        try {
+            Image image = new ImageIcon("C:/Users/Roulland/Desktop/Decryptor/Côté enseignant/img/fav.png").getImage();
+            this.setIconImage(image);
+        } catch (Exception e) {
+            System.out.println("Application icon not found");
+        }
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
+            this.setIconImage(icon.getImage());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         this.setResizable(false);
 
         exporter.setVisible(false);

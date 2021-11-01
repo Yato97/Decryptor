@@ -3,6 +3,7 @@
     position: fixed;
     transform: translateX(-50%);
     transform: translateY(-50%);
+    height: auto;
     left: 50%;
     top: 50%;
     margin-left: -24rem;
@@ -39,7 +40,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 30rem;
-    height:15em;
+    height:26em;
     border-radius: 5px;
     padding-bottom: 20px;
 }
@@ -52,6 +53,16 @@
  
 form input[type="text"] {
     padding-left: 20px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: 0;
+}
+
+form input[type="date"] {
+    padding-left: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
     color: #333;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -73,7 +84,10 @@ form input[type="text"] {
     width: 100px;
     text-align: left;
 }
-
+P {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
 .buttonControl {
     display: block;
     position: relative;
@@ -153,13 +167,21 @@ form input[type="text"] {
 /* -----------------------------------------Clé crypté ------------------------------------------ */
 /* ---------------------------------------------------------------------------------------------- */
 #result {
-    margin-left: 0;
-    position: absolute;
-    left: 19rem;
-    top: 17.9rem;
     z-index: 1;
     opacity: 0;
     display: none;
+    margin-top: -3rem;
+}
+
+#generate {
+    z-index: 10;
+}
+
+.btn {
+    width: 10rem;
+    height: 3rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 /* ---------------------------------------------------------------------------------------------- */
 /* -----------------------------------------Clé crypté ------------------------------------------ */

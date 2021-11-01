@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
@@ -18,9 +19,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,17 +31,19 @@ public class LocalCrypto extends JFrame {
     JButton encrypter = new JButton("Crypter");
     JButton exporter = new JButton("Exporter");
 
-    JTextArea zoneInputNum = new JTextArea();
-    JTextArea zoneInputNom = new JTextArea();;
-    JTextArea zoneInputPrenom = new JTextArea();;
+    JTextField zoneInputNum = new JTextField();
+    JTextField zoneInputNom = new JTextField();
+    JTextField zoneInputPrenom = new JTextField();
+    JTextField zoneInputDate = new JTextField();
     static JTextArea zoneOutput = new JTextArea();
 
     JLabel t1 = new JLabel("Numéro étudiant : ");
     JLabel t4 = new JLabel("Nom : ");
     JLabel t3 = new JLabel("Prénom : ");
+    JLabel t5 = new JLabel("Date de naissance (JJ/MM/AAAA) : ");
     JLabel t2 = new JLabel("Résultat : ");
 
-    Dimension dim = new Dimension(600, 400);
+    Dimension dim = new Dimension(600, 440);
 
     Border EtchedBorderRaised = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
@@ -52,10 +55,18 @@ public class LocalCrypto extends JFrame {
         this.setSize(dim);
         this.setMinimumSize(dim);
         this.setLocationRelativeTo(null);
-
-        ImageIcon icon = new ImageIcon(
-                System.getProperty("user.dir") + File.separator + "/Côté enseignant/img/fav.png");
-        this.setIconImage(icon.getImage());
+        try {
+            Image image = new ImageIcon("C:/Users/Roulland/Desktop/Decryptor/Côté enseignant/img/fav.png").getImage();
+            this.setIconImage(image);
+        } catch (Exception e) {
+            System.out.println("Application icon not found");
+        }
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("fav.png"));
+            this.setIconImage(icon.getImage());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
         this.setResizable(false);
 
@@ -69,10 +80,22 @@ public class LocalCrypto extends JFrame {
                 String heure = null;
                 Date aujourdhui = new Date();
 
-                date = new SimpleDateFormat("dd/MM/yy").format(aujourdhui);
+                date = new SimpleDateFormat("dd/MM/yyyy").format(aujourdhui);
                 heure = new SimpleDateFormat("hh:mm:ss").format(aujourdhui);
-                String crypted = zoneInputNum.getText() + "," + zoneInputNom.getText() + "," + zoneInputPrenom.getText()
-                        + "," + NOTE + "," + date + "," + heure;
+
+                // Retire tout les espaces vides, les tabulations, les retour a la ligne des
+                // informations saisie par l'utilisateur
+                String num = zoneInputNum.getText().replaceAll(" ", "").replaceAll("\t", "").replaceAll("\r", "")
+                        .replaceAll("\n", "");
+                String nom = zoneInputNom.getText().replaceAll(" ", "").replaceAll("\t", "").replaceAll("\r", "")
+                        .replaceAll("\n", "");
+                String prenom = zoneInputPrenom.getText().replaceAll(" ", "").replaceAll("\t", "").replaceAll("\r", "")
+                        .replaceAll("\n", "");
+                String dateN = zoneInputDate.getText().replaceAll(" ", "").replaceAll("\t", "").replaceAll("\r", "")
+                        .replaceAll("\n", "");
+                String crypted = num + "," + nom + "," + prenom + "," + dateN + "," + NOTE + "," + date + "," + heure;
+
+                System.out.println(crypted);
                 String encode = Decrypt.encrypt(crypted);
                 zoneOutput.setText(encode);
                 exporter.setVisible(true);
@@ -91,7 +114,7 @@ public class LocalCrypto extends JFrame {
         JPanel north = new JPanel();
         JPanel temp = new JPanel();
 
-        north.setPreferredSize(new Dimension(600, 220));
+        north.setPreferredSize(new Dimension(600, 260));
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
 
         t1.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -106,6 +129,9 @@ public class LocalCrypto extends JFrame {
         temp.add(t3);
         temp.add(zoneInputPrenom);
         zoneInputPrenom.setPreferredSize(new Dimension(550, 25));
+        temp.add(t5);
+        temp.add(zoneInputDate);
+        zoneInputDate.setPreferredSize(new Dimension(550, 25));
 
         temp.add(encrypter);
 
