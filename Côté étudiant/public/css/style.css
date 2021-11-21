@@ -40,7 +40,11 @@
     margin-left: auto;
     margin-right: auto;
     width: 30rem;
+<<<<<<< HEAD
     height:26em;
+=======
+    height:23em;
+>>>>>>> cdb5c2cef3367cc45d0bd0e30e36efe7f3a4f6f2
     border-radius: 5px;
     padding-bottom: 20px;
 }
@@ -173,10 +177,13 @@ P {
     margin-top: -3rem;
 }
 
+<<<<<<< HEAD
 #generate {
     z-index: 10;
 }
 
+=======
+>>>>>>> cdb5c2cef3367cc45d0bd0e30e36efe7f3a4f6f2
 .btn {
     width: 10rem;
     height: 3rem;
